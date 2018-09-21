@@ -1,14 +1,21 @@
 package com.small.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 public class Students implements Serializable {
+
+    @ApiModelProperty("ID")
     private Integer id;
 
+    @ApiModelProperty("名称")
     private String name;
 
+    @ApiModelProperty("年龄")
     private Integer age;
 
+    @ApiModelProperty("地址")
     private String city;
 
     private static final long serialVersionUID = 1L;

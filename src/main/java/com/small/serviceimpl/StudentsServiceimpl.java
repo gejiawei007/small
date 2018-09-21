@@ -2,7 +2,9 @@ package com.small.serviceimpl;
 
 import com.small.dao.StudentsMapper;
 import com.small.entity.Students;
+import com.small.entity.StudentsExample;
 import com.small.service.StudentsService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +49,28 @@ public class StudentsServiceimpl implements StudentsService {
      */
     @Override
     public int update(Students students) {
-        int count = StudentsDao.updateByPrimaryKeySelective(students);
-        return count;
+
+        StudentsExample studentsExample = new StudentsExample();
+        StudentsExample.Criteria criteria = studentsExample.createCriteria();
+        criteria.andIdEqualTo(students.getId());
+
+        long count = StudentsDao.countByExample(studentsExample);
+
+        if (count>0){
+            Students studentsInitial = new Students();
+            studentsInitial.setId(students.getId());
+            studentsInitial.setName(students.getName());
+            studentsInitial.setAge(students.getAge());
+            studentsInitial.setCity(students.getCity());
+
+            int count2 = StudentsDao.updateByPrimaryKeySelective(studentsInitial);
+
+            return count2;
+        }else {
+
+            return 0;
+        }
+
     }
 
     /**

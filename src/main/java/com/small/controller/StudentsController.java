@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,12 +44,39 @@ public class StudentsController {
     }
 
     @ApiOperation("通过ID查询学生")
-    //@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer")
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer",paramType = "query")
     @RequestMapping(value = "/select",method = RequestMethod.GET)
     public Students select (Integer id){
 
         Students students = studentsService.select(id);
 
         return  students;
+    }
+
+    @ApiOperation("修改学生信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name ="id",value = "用户ID",required = true ,dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "name",value = "用户名称",required = false,dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "age",value = "用户年龄",required = false,dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "city",value = "地址",required = false,dataType = "String",paramType = "query")
+    })
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public int update(Students students){
+
+        int count = studentsService.update(students);
+
+        return count;
+    }
+
+    @ApiOperation("添加一个学生")
+    /*@ApiImplicitParams({
+            @ApiImplicitParam(name = "Students",value = "学生实体",dataType = "Students",paramType = "body")
+    })*/
+    @RequestMapping(value = "insert",method = RequestMethod.POST)
+    public int insert(@RequestBody Students students){
+
+        int count = studentsService.insert(students);
+
+        return count;
     }
 }

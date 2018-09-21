@@ -18,7 +18,7 @@ public class Result<T> implements Serializable{
 
     // 返回消息，成功为“success”，失败为具体失败信息
     @ApiModelProperty(value = "错误码描述", name = "错误码描述")
-    private String desc;
+    private String msg;
 
     // 返回数据
     @ApiModelProperty(value = "数据对象", name = "数据对象")
@@ -27,14 +27,14 @@ public class Result<T> implements Serializable{
     public Result() {
     }
 
-    public Result(int code, String desc) {
+    public Result(int code, String msg) {
         this.code = code;
-        this.desc = desc;
+        this.msg = msg;
     }
 
-    public Result(int code, String desc, T data) {
+    public Result(int code, String msg, T data) {
         this.code = code;
-        this.desc = desc;
+        this.msg = msg;
         this.data = data;
     }
 
@@ -46,12 +46,12 @@ public class Result<T> implements Serializable{
         this.code = code;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getmsg() {
+        return msg;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setmsg(String msg) {
+        this.msg = msg;
     }
 
     public T getData() {
@@ -66,7 +66,7 @@ public class Result<T> implements Serializable{
     public String toString() {
         return "Result{" +
                 "code=" + code +
-                ", desc='" + desc + '\'' +
+                ", msg='" + msg + '\'' +
                 ", data=" + data +
                 '}';
     }
